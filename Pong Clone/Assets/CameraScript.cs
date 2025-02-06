@@ -8,20 +8,21 @@ public class CameraScript : MonoBehaviour
 {
     private Vector3 originalPos;
     public float shakeMagnitude = .5f;
+    private float originalMagnitude;
     public float shakeFrequency;
     private Vector3 maxShake;
-    private Vector3 maxAngularShake = Vector3.one * 2;
+    private Vector3 maxAngularShake = Vector3.one;
 
-    private float recoverySpeed = 1.5f;
+    private float recoverySpeed = 3f;
 
     private int traumaExp = 2;
-    private float trauma = 1;
+    private float trauma = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         originalPos = this.gameObject.transform.position;
-        shakeFrequency = 25;
         maxShake = Vector3.one * shakeMagnitude;
+        originalMagnitude = shakeMagnitude;
     }
 
     // Update is called once per frame
@@ -39,5 +40,18 @@ public class CameraScript : MonoBehaviour
             maxAngularShake.z * Mathf.PerlinNoise(5, Time.time * shakeFrequency) * 2 - 1
         ) * shake);
         trauma = Mathf.Clamp01(trauma - recoverySpeed * Time.deltaTime);
+    }
+
+    public void Shake(float speed)
+    {
+        trauma = 1;
+        shakeMagnitude += speed / 200;
+        maxShake = Vector3.one * shakeMagnitude;
+    }
+
+    public void resetShakeMag()
+    {
+        shakeMagnitude = originalMagnitude;
+        maxShake = Vector3.one * shakeMagnitude;
     }
 }
