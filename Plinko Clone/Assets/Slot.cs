@@ -1,4 +1,4 @@
-using System;
+ using System;
 using TMPro;
 using UnityEngine;
 
@@ -28,6 +28,7 @@ public class Slot : MonoBehaviour
         }
         Destroy(other.gameObject);
         modifier *= 0.9f;
+        modifier = (float)Math.Round((Decimal)modifier, 1);
         setModifierText();
     }
 
